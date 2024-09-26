@@ -1,0 +1,6 @@
+@DMI_HostAddress = http://localhost:5280
+
+GET {{DMI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
