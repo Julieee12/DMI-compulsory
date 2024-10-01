@@ -5,7 +5,7 @@ interface ProductViewProps {}
 
 const ProductView: FC<ProductViewProps> = () => (
     <div className="container">
-        <img src={image} alt="Logo" className="centeredLogo"/>
+        <img src={image} alt="Logo" className="centeredLogo absolute left-64 rotate-6"/>
         <ul className={`menu bg-base-200 rounded-box left-menu`}>
             <li>
                 <a>
