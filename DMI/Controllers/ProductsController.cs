@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DMI.Data;
+using Microsoft.AspNetCore.Mvc;
 using DMI.DTOs;
 using DMI.Models;
 
@@ -9,6 +10,8 @@ namespace DMI.Controllers;
 public class ProductsController : ControllerBase
 {
     private static List<Product> _products = new List<Product>();
+    
+    private readonly ApplicationDbContext _context;
 
     [HttpGet]
     public ActionResult<IEnumerable<ProductDto>> GetProducts([FromQuery] string search, [FromQuery] string filter, [FromQuery] string orderBy)
