@@ -3,6 +3,7 @@ using System;
 using DMI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DMI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241001150814_initialcreate")]
+    partial class initialcreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,6 @@ namespace DMI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -41,9 +40,6 @@ namespace DMI.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("Phone")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -53,31 +49,12 @@ namespace DMI.Migrations
             modelBuilder.Entity("DMI.Models.Order", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("DeliveryDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("OrderStatusId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TotalAmount")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("OrderStatusId");
 
                     b.ToTable("Orders");
                 });
@@ -155,7 +132,7 @@ namespace DMI.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("DMI.Models.ProductProperties", b =>
+            modelBuilder.Entity("DMI.Models.ProductProperty", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -170,6 +147,10 @@ namespace DMI.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
@@ -179,19 +160,17 @@ namespace DMI.Migrations
 
             modelBuilder.Entity("DMI.Models.Order", b =>
                 {
-                    b.HasOne("DMI.Models.Customer", "Customer")
+                    b.HasOne("DMI.Models.Customer", null)
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DMI.Models.OrderStatus", "Status")
                         .WithMany()
-                        .HasForeignKey("OrderStatusId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Customer");
 
                     b.Navigation("Status");
                 });
@@ -215,7 +194,7 @@ namespace DMI.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("DMI.Models.ProductProperties", b =>
+            modelBuilder.Entity("DMI.Models.ProductProperty", b =>
                 {
                     b.HasOne("DMI.Models.Product", "Product")
                         .WithMany("Properties")

@@ -52,11 +52,10 @@ public class ProductsController : ControllerBase
             Price = p.Price,
             Stock = p.Stock,
             IsDiscontinued = p.IsDiscontinued,
-            Properties = p.Properties.Select(pp => new ProductPropertyDto
+            Properties = p.Properties.Select(pp => new ProductPropertiesDto
             {
                 Id = pp.Id,
-                Name = pp.Name,
-                Value = pp.Value
+                Name = pp.Name
             }).ToList()
         }).ToList();
 
@@ -73,10 +72,9 @@ public class ProductsController : ControllerBase
             Price = productDto.Price,
             Stock = productDto.Stock,
             IsDiscontinued = productDto.IsDiscontinued,
-            Properties = productDto.Properties.Select(pp => new ProductProperty
+            Properties = productDto.Properties.Select(pp => new ProductProperties
             {
-                Name = pp.Name,
-                Value = pp.Value
+                Name = pp.Name
             }).ToList()
         };
 
@@ -117,7 +115,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost("{id}/properties")]
-    public ActionResult AddProductProperty(int id, [FromBody] ProductPropertyDto propertyDto)
+    public ActionResult AddProductProperty(int id, [FromBody] ProductPropertiesDto propertiesDto)
     {
         var product = _context.Products.Include(p => p.Properties).FirstOrDefault(p => p.Id == id);
         if (product == null)
@@ -125,17 +123,16 @@ public class ProductsController : ControllerBase
             return NotFound();
         }
 
-        var property = new ProductProperty
+        var property = new ProductProperties
         {
-            Name = propertyDto.Name,
-            Value = propertyDto.Value,
+            Name = propertiesDto.Name,
             ProductId = id
         };
 
         product.Properties.Add(property);
         _context.SaveChanges();
 
-        return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, propertyDto);
+        return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, propertiesDto);
     }
 
     // Additional CRUD operations for products
