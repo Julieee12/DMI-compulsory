@@ -1,10 +1,36 @@
-import React, { FC } from 'react';
-import image from '../../assets/logo.png'; // Adjust the path as necessary
+import React, {FC, useEffect} from 'react';
+import image from '../assets/logo.png'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';
+import { productAtom } from '../Atoms/Atoms';
+import { useAtom } from 'jotai';
+import {ProductList} from "../Services/ProductService";
 
 interface ProductViewProps {}
 
-const ProductView: FC<ProductViewProps> = () => {
+const ProductPage: FC<ProductViewProps> = () => {
+
+    const[products, setProducts] = useAtom(productAtom);
+
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                const fetchedProducts = await ProductList();
+                setProducts(fetchedProducts);
+            } catch (error) {
+                console.error('Error fetching papers:', error);
+            }
+        };
+        loadProducts() ;
+    }, [setProducts]);
+
+
+
+
+
+
+
+
+
     const navigate = useNavigate();
 
     const goToHomePage = () => {
@@ -16,6 +42,41 @@ const ProductView: FC<ProductViewProps> = () => {
     // };
 
     return (
+        <>
+            <div>
+                <h2 className="text-xl font-semi">Available Paper:</h2>
+
+                <div
+                    className="max-h-64 overflow-y-auto overflow-x-hidden border border-gray-300 rounded-md p-2 pr-6">
+                    <ul>
+                        {products?.map(products => (
+                            <li key={products.id}>
+                                <div className="flex justify-between whitespace-nowrap">
+                                        <span
+                                            className={`flex-1 ${products.isDiscontinued ? 'text-red-900' : ''}`}>{products.name}</span>
+                                    {products.stock !== undefined && (
+                                        <span
+                                            className={`${products.stock > 15 ? 'text-green-500' : products.stock >= 3 ? 'text-yellow-200' : 'text-red-500'}`}><span
+                                            className='flex-none text-right'> Availability: </span>
+                                        <span className="text-right">{products.stock}</span>
+                                    </span>
+                                    )}
+                                </div>
+
+                                {Array.isArray(products.properties) && (
+                                    <ul className="ml-4 text-sm">
+                                        {products.properties.map((property, index) => (
+                                            <li key={index}>{String(property)}{"<--Broken properties 👍"}</li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+
+
         <div className="container">
             <img src={image} alt="Logo" className="centeredLogo absolute left-64 rotate-6"/>
             <ul className={`menu bg-base-200 rounded-box left-menu`}>
@@ -72,7 +133,8 @@ const ProductView: FC<ProductViewProps> = () => {
                 </li>
             </ul>
         </div>
+        </>
     );
 };
 
-export default ProductView;
+export default ProductPage;
