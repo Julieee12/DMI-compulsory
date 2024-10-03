@@ -1,20 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+// import Customer from './Pages/CustomerPage';
+// import Admin from './Pages/AdminPage';
+import HomePage from "./Pages/HomePage";
 import ProductView from "./components/ProductView/ProductView";
 
-function App() {
-  return (
 
-    <BrowserRouter>
-        <Routes>
-            {/*<Route path="/" element={<Home />} />*/}
-            <Route path="/products" element={<ProductView />} />
-            {/*<Route path="/orders" element={<Orders />} />*/}
-        </Routes>
-    </BrowserRouter>
-  );
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/products" element={<ProductView />} />
+                {/*<Route path="/customerpage" element={<CustomerPage />} />*/}
+                {/*<Route path="/adminpage" element={<AdminPage />} />*/}
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;
