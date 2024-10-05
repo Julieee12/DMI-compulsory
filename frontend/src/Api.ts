@@ -24,6 +24,16 @@ export interface OrderDto {
   customerId?: number;
 }
 
+export interface CustomerDto {
+    /** @format int32 */
+    id?: number;
+    name?: string | null;
+    address?: string | null;
+    email?: string | null;
+    phone?: string | null;
+
+}
+
 export interface OrderEntryDto {
   /** @format int32 */
   id?: number;

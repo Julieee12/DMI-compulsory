@@ -34,12 +34,12 @@ public class CustomersController : ControllerBase
 
         return Ok(orderDtos);
     }
-    [HttpGet("Customer")]  
+    [HttpGet]  
     public ActionResult<IEnumerable<CustomerDto>> GetCustomers()
     {
         return Ok(_context.Customers);
     }
-    [HttpPost("Customer")]
+    [HttpPost]
     public ActionResult<CustomerDto> CreateCustomer(CustomerDto customerDto)
     {
         var customer = new Customer

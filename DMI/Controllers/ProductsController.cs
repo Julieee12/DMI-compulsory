@@ -32,13 +32,9 @@ public class ProductsController : ControllerBase
                 Price = p.Price,
                 Stock = p.Stock,
                 IsDiscontinued = p.IsDiscontinued,
-                Properties = p.Properties.Select(pp => new ProductPropertiesDto
-                {
-                    Id = pp.Id,
-                    Name = pp.Name
-                }).ToList()
-            })
-            .ToListAsync();
+                Properties = p.Properties
+                
+            }
 
         return Ok(products);
     }

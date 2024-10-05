@@ -9,3 +9,7 @@ export const fetchProducts = async () => {
     return response.data;
 }
 
+export const postProduct = async (product: any) => {
+    const response = await axios.post(apiBaseUrl, product);
+    return response.data;
+}
