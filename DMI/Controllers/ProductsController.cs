@@ -23,18 +23,17 @@ public class ProductsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
     {
-        var products = await _context.Products
-            .Include(p => p.Properties)
+        var products = _context.Products
             .Select(p => new ProductDto
             {
-           
+
                 Name = p.Name,
                 Price = p.Price,
                 Stock = p.Stock,
                 IsDiscontinued = p.IsDiscontinued,
                 Properties = p.Properties
-                
-            }
+
+            });
 
         return Ok(products);
     }
@@ -53,10 +52,7 @@ public class ProductsController : ControllerBase
             Price = productDto.Price,
             Stock = productDto.Stock,
             IsDiscontinued = productDto.IsDiscontinued,
-            Properties = productDto.Properties.Select(pp => new ProductProperties
-            {
-                Name = pp.Name
-            }).ToList()
+            Properties = productDto.Properties
         };
 
         _context.Products.Add(product);
@@ -95,26 +91,26 @@ public class ProductsController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("{id}/properties")]
-    public ActionResult AddProductProperty(int id, [FromBody] ProductPropertiesDto propertiesDto)
-    {
-        var product = _context.Products.Include(p => p.Properties).FirstOrDefault(p => p.Id == id);
-        if (product == null)
-        {
-            return NotFound();
-        }
-
-        var property = new ProductProperties
-        {
-            Name = propertiesDto.Name,
-            ProductId = id
-        };
-
-        product.Properties.Add(property);
-        _context.SaveChanges();
-
-        return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, propertiesDto);
-    }
+    // [HttpPost("{id}/properties")]
+    // public ActionResult AddProductProperty(int id, [FromBody] ProductPropertiesDto propertiesDto)
+    // {
+    //     var product = _context.Products.Include(p => p.Properties).FirstOrDefault(p => p.Id == id);
+    //     if (product == null)
+    //     {
+    //         return NotFound();
+    //     }
+    //
+    //     var property = new ProductProperties
+    //     {
+    //         Name = propertiesDto.Name,
+    //         ProductId = id
+    //     };
+    //
+    //     product.Properties.Add(property);
+    //     _context.SaveChanges();
+    //
+    //     return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, propertiesDto);
+    // }
 
     // Additional CRUD operations for products
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { postCustomer } from "../Services/CustomerService";
 import { postProduct } from "../Services/ProductService";
 import CustomersList from "../components/CustomersList";
+import ProductsList from "../components/ProductsList";
 
 const AdminPage: React.FC = () => {
     // State variables for customer
@@ -15,6 +16,7 @@ const AdminPage: React.FC = () => {
     const [price, setPrice] = useState("");
     const [stock, setStock] = useState("");
     const [isDiscontinued, setIsDiscontinued] = useState(false);
+    const [properties, setProductProperties] = useState("");
 
     // Handle customer form submission
     const handleCustomerSubmit = (event: React.FormEvent) => {
@@ -27,7 +29,7 @@ const AdminPage: React.FC = () => {
     // Handle product form submission
     const handleProductSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        const newProduct = { name: productName, price: parseFloat(price), stock: parseInt(stock), isDiscontinued };
+        const newProduct = { name: productName, price: parseFloat(price), stock: parseInt(stock), isDiscontinued, properties };
         console.log("Creating product:", newProduct);
         postProduct(newProduct);
     };
@@ -111,6 +113,16 @@ const AdminPage: React.FC = () => {
                     />
                 </div>
                 <div>
+                    <label htmlFor="properties">Description:</label>
+                    <input
+                        type="text"
+                        id="properties"
+                        value={properties}
+                        onChange={(e) => setProductProperties(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
                     <label htmlFor="isDiscontinued">Discontinued:</label>
                     <input
                         type="checkbox"
@@ -122,7 +134,8 @@ const AdminPage: React.FC = () => {
                 <button type="submit">Create Product</button>
             </form>
 
-            <CustomersList />
+            <CustomersList/>
+            <ProductsList/>
         </div>
     );
 };
