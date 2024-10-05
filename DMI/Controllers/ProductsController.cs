@@ -19,48 +19,34 @@ public class ProductsController : ControllerBase
         _context = context;
     }
 
+    //GET all products
     [HttpGet]
-    public ActionResult<IEnumerable<ProductDto>> GetProducts([FromQuery] string search, [FromQuery] string filter, [FromQuery] string orderBy)
+    public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
     {
-        var products = _context.Products.Include(p => p.Properties).AsQueryable();
-
-        if (!string.IsNullOrEmpty(search))
-        {
-            products = products.Where(p => p.Name.Contains(search) || p.Description.Contains(search));
-        }
-
-        if (!string.IsNullOrEmpty(filter))
-        {
-            products = products.Where(p => p.Properties.Any(pp => pp.Name == filter));
-        }
-
-        if (!string.IsNullOrEmpty(orderBy))
-        {
-            products = orderBy switch
+        var products = await _context.Products
+            .Include(p => p.Properties)
+            .Select(p => new ProductDto
             {
-                "price" => products.OrderBy(p => p.Price),
-                "name" => products.OrderBy(p => p.Name),
-                _ => products
-            };
-        }
+           
+                Name = p.Name,
+                Price = p.Price,
+                Stock = p.Stock,
+                IsDiscontinued = p.IsDiscontinued,
+                Properties = p.Properties.Select(pp => new ProductPropertiesDto
+                {
+                    Id = pp.Id,
+                    Name = pp.Name
+                }).ToList()
+            })
+            .ToListAsync();
 
-        var productDtos = products.Select(p => new ProductDto
-        {
-            Id = p.Id,
-            Name = p.Name,
-            Description = p.Description,
-            Price = p.Price,
-            Stock = p.Stock,
-            IsDiscontinued = p.IsDiscontinued,
-            Properties = p.Properties.Select(pp => new ProductPropertiesDto
-            {
-                Id = pp.Id,
-                Name = pp.Name
-            }).ToList()
-        }).ToList();
-
-        return Ok(productDtos);
+        return Ok(products);
     }
+    
+    
+    
+
+       
 
     [HttpPost]
     public ActionResult<ProductDto> CreateProduct(ProductDto productDto)
@@ -68,7 +54,6 @@ public class ProductsController : ControllerBase
         var product = new Product
         {
             Name = productDto.Name,
-            Description = productDto.Description,
             Price = productDto.Price,
             Stock = productDto.Stock,
             IsDiscontinued = productDto.IsDiscontinued,

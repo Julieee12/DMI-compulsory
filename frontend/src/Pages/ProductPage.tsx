@@ -3,7 +3,9 @@ import image from '../assets/logo.png'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';
 import { productAtom } from '../Atoms/Atoms';
 import { useAtom } from 'jotai';
-import {ProductList} from "../Services/ProductService";
+import {fetchProducts} from "../Services/ProductService";
+// import {ProductList} from "../Services/ProductService";
+
 
 interface ProductViewProps {}
 
@@ -14,7 +16,7 @@ const ProductPage: FC<ProductViewProps> = () => {
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const fetchedProducts = await ProductList();
+                const fetchedProducts = await fetchProducts();
                 setProducts(fetchedProducts);
             } catch (error) {
                 console.error('Error fetching papers:', error);

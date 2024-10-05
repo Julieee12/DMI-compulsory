@@ -1,11 +1,11 @@
-import {Api, ProductDto} from "../Api";
-const apiBaseUrl = "http://localhost:5280/api";
-const api = new Api({baseURL: apiBaseUrl});
+import axios from "axios";
+// import {Api, ProductDto} from "../Api";
+const apiBaseUrl = "http://localhost:5280/api/Products";
+// const api = new Api({baseURL: apiBaseUrl});
 
 
-
-
-export async function ProductList() : Promise<ProductDto[]> {
-    const response = await api.api.productsList();
+export const fetchProducts = async () => {
+    const response = await axios.get(apiBaseUrl);
     return response.data;
 }
+
