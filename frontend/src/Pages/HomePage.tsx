@@ -5,11 +5,11 @@ const HomePage: React.FC = () => {
     const navigate = useNavigate();
 
     const goToAdminPage = () => {
-        navigate('/admin');
+        navigate('/adminpage');
     };
 
     const goToOrderPage = () => {
-        navigate('/customer');
+        navigate('/customerpage');
     };
 
     const goToProductPage = () => {

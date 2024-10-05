@@ -19,7 +19,7 @@ const ProductPage: FC<ProductViewProps> = () => {
                 const fetchedProducts = await fetchProducts();
                 setProducts(fetchedProducts);
             } catch (error) {
-                console.error('Error fetching papers:', error);
+                console.error('Error fetching products:', error);
             }
         };
         loadProducts() ;
