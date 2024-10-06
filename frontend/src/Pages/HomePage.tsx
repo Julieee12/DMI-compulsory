@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import React from "react";
 import image from '../assets/logo.png'; // Adjust the path as necessary
 import schruteAd from '../assets/schrutead.png'; // Adjust the path as necessary
@@ -66,7 +66,9 @@ const HomePage: React.FC = () => {
                 </div>
 
                 <div className="adsstyling">
-                    <img src={Creed} alt="Creed Ad" className="ad-image"/>
+                    <a href="https://creedthoughtsgov.com/" target="_blank">
+                        <img src={Creed} alt="Creed Ad" className="ad-image"/>
+                    </a>
                     <p className="ad-text">Display your ad here!</p>
                 </div>
             </div>
