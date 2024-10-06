@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
                 {/* Centered Content */}
                 <div className="centered-content">
                     <img src={image} alt="Logo" className="centeredLogo"/>
-                    <h1 className="title">Welcome to Dunder Mifflin Portal</h1>
+                    <h1 className="title">Welcome to Dunder Mifflin Infinity!</h1>
                     <h2 className="subtitle">Choose your destiny!</h2>
                     <div className="button-container">
                         <button className="retro-button" onClick={goToAdminPage}>I’m Michael Scott</button>
@@ -57,8 +57,8 @@ const HomePage: React.FC = () => {
 
             <div className={"absolute right-0 h-screen flex flex-col justify-start w-[400px] top-0"}>
                 {/* Left Advertisement */}
-                <div className="adsstyling flex-1">
-                    <p> add your ad</p>
+                <div className="adsstyling flex-1 text-red-500 text-5xl font-black justify-center flex items-center">
+                    <p> ADS!ADS!ADS!</p>
                 </div>
                 <div className={"adsstyling"}>
                     <img src={BBB} alt="BBB Ad" className="ad-image"/>
