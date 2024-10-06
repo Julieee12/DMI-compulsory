@@ -15,7 +15,7 @@ function App() {
                 <Route path="/customerpage" element={<CustomerPage />} />
                 <Route path="/adminpage" element={<AdminPage />} />
             </Routes>
-            <MenuLeft />
+
         </Router>
 
     );

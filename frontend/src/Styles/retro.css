@@ -1,0 +1,376 @@
+/* retro.css */
+
+/* General retro styles */
+body {
+    background-color: #e0e0e0;
+    font-family: "Courier New", Courier, monospace;
+    color: #000;
+    display: flex;
+    flex-direction: row;
+}
+
+/* Left Menu styles */
+.retro-left-menu {
+    width: 220px;
+    background-color: #d3d3d3;
+    padding: 15px;
+    border: 3px outset #ccc;
+    margin-right: 20px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.retro-left-menu ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.retro-left-menu li {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.retro-left-menu a {
+    color: blue;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.retro-left-menu a:hover {
+    text-decoration: underline;
+}
+
+.retro-left-menu svg {
+    margin-right: 10px;
+}
+
+/* Admin Main Content Styles */
+.admin-main-content {
+    margin-left: 260px; /* Account for the left menu width */
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid black;
+    width: calc(100% - 280px);
+    box-shadow: 5px 5px 0px #999;
+}
+
+/* Headers with retro styling */
+h1, h2 {
+    color: red;
+    text-align: center;
+    background-color: yellow;
+    padding: 5px;
+    border: 2px solid black;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Forms with retro feel */
+form {
+    margin-bottom: 20px;
+    border: 2px solid #000;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 3px 3px 0px #999;
+}
+
+/* Form input fields */
+input, select {
+    border: 2px inset #aaa;
+    padding: 5px;
+    width: calc(100% - 20px);
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f8f8f8;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    margin-left: 5px;
+}
+
+/* Form submit buttons */
+button {
+    font-family: "Arial", sans-serif;
+    font-size: 16px;
+    background-color: lime;
+    color: black;
+    border: 2px solid black;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #555;
+}
+
+button:hover {
+    background-color: #00ff00;
+}
+
+/* Customer and Product Lists */
+.customers-list, .products-list {
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px solid black;
+    background-color: #f2f2f2;
+    font-family: "Courier New", Courier, monospace;
+    box-shadow: 3px 3px 0px #999;
+}
+
+.customers-list ul, .products-list ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.customers-list li, .products-list li {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Labels and text fields to feel outdated */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+/* Checkbox and its label alignment */
+label[for="isDiscontinued"] {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Container for entire admin page */
+.m-8 {
+    margin: 40px;
+}
+/* Retro Page Container */
+.container {
+    margin-left: 260px; /* Account for the left menu width */
+    padding: 20px;
+    width: calc(100% - 280px);
+    box-shadow: 5px 5px 0px #999;
+    background-color: #fff;
+    border: 2px solid black;
+}
+
+/* Retro Logo Styling */
+.centeredLogo {
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%) rotate(6deg); /* Center logo and give it a funny rotated look */
+    width: 500px;
+    border: 3px solid #000;
+    background-color: yellow;
+    padding: 5px;
+    box-shadow: 5px 5px 0px #333;
+}
+
+.adsstyling {
+    width: 100%;
+    border: 3px solid #000;
+    background-color: yellow;
+    padding: 5px;
+    box-shadow: 5px 5px 0px #333;
+}
+
+/* Absolute positioning for logo */
+.absolute {
+    position: absolute;
+}
+
+/* Add a rotated effect for a retro style */
+.rotate-6 {
+    transform: rotate(6deg);
+}
+
+/* Products List Styling */
+.products-list {
+    margin-top: 220px; /* Make room for the rotated logo at the top */
+    padding: 20px;
+    border: 2px solid #000;
+    background-color: #f2f2f2;
+    font-family: "Courier New", Courier, monospace;
+    box-shadow: 3px 3px 0px #999;
+}
+
+.products-list ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.products-list li {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+}
+
+/* Home Page Wrapper Styling */
+.home-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Top Logo Styling */
+.top-logo {
+    width: 150px;
+    border: 3px solid #000;
+    background-color: yellow;
+    padding: 10px;
+    box-shadow: 5px 5px 0px #333;
+    transform: rotate(6deg);
+    margin-bottom: 20px;
+}
+
+/* Set the entire page background color */
+body {
+    background-color: #f0e68c; /* Light retro yellow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Home Page Wrapper Styling */
+.home-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Top Logo Styling */
+.top-logo {
+    width: 150px;
+    border: 3px solid #000;
+    background-color: yellow;
+    padding: 10px;
+    box-shadow: 5px 5px 0px #333;
+    transform: rotate(6deg);
+    margin-bottom: 20px;
+}
+
+/* Home Container Styling */
+.home-container {
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f2f2f2;
+    border: 3px solid #000;
+    box-shadow: 5px 5px 0px #999;
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+/* Title and Subtitle Styling */
+.title {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0px #666;
+}
+
+.subtitle {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Retro Button Styling */
+.retro-button {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #ffa500;
+    color: #000;
+    padding: 15px 30px;
+    border: 3px solid #000;
+    box-shadow: 3px 3px 0px #666;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.retro-button:hover {
+    background-color: #ffcc00;
+    box-shadow: 5px 5px 0px #333;
+    transform: translate(-2px, -2px);
+}
+.home-container {
+    display: flex;
+    justify-content: space-between; /* Space between the ads and center content */
+    align-items: center; /* Align items vertically centered */
+    padding: 20px; /* Padding for the container */
+    background-color: #e3e3e3; /* Background color for the entire page */
+}
+
+.ad-container {
+    flex: 0 0 20%; /* Fixed width for ads */
+    text-align: center; /* Center text in ads */
+    position: relative; /* For positioning if needed */
+}
+
+.ad-image {
+    max-width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.centered-content {
+    flex: 1; /* Allow the centered content to take the remaining space */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all items in the centered content */
+}
+
+.title {
+    font-size: 2rem;
+    color: #333; /* Change to a suitable color */
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #666; /* Change to a suitable color */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px; /* Spacing between buttons */
+    margin-top: 20px; /* Space above buttons */
+}
+
+.retro-button {
+    background-color: #f0c040; /* A retro button color */
+    border: 2px solid #333; /* Border style */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding inside buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1rem; /* Button text size */
+}
