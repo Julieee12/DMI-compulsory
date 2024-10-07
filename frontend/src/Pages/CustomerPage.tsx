@@ -1,4 +1,5 @@
 import React from "react";
+import CustomersList from "../components/CustomersList";
 
 const CustomerPage: React.FC = () => {
 
@@ -8,8 +9,9 @@ const CustomerPage: React.FC = () => {
 
 
     return (
-        <div>
-            <h1>Customer Page</h1>
+        <div className={"adsstyling text-2xl"}>
+            <h1>Okay, but which one?</h1>
+            <CustomersList />
         </div>
     );
 }

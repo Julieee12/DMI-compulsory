@@ -39,6 +39,24 @@ public class CustomersController : ControllerBase
     {
         return Ok(_context.Customers);
     }
+    
+    
+    //Get customer by id
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Customer>> GetCustomer(int id)
+    {
+            
+        var customer = await _context.Customers.FindAsync(id);
+
+        if (customer == null)
+        {
+            return NotFound();
+        }
+
+        return customer;
+    }
+    
+    
     [HttpPost]
     public ActionResult<CustomerDto> CreateCustomer(CustomerDto customerDto)
     {
@@ -52,6 +70,9 @@ public class CustomersController : ControllerBase
 
         _context.Add(customer);
         _context.SaveChanges();
+        
+   
+        
         
 
         return CreatedAtAction(nameof(GetCustomers), new { id = customer.Id }, customerDto);

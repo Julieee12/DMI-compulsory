@@ -6,3 +6,4 @@ export const productAtom = atom<ProductDto[]>([])
 
 //Customer Atom
 export const customerAtom = atom<CustomerDto[]>([])
+export const customerSelectedAtom = atom(null);

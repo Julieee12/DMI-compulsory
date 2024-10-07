@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useAtom } from "jotai";
 import { customerAtom } from "../Atoms/Atoms";
+import {customerSelectedAtom} from "../Atoms/Atoms";
 import { fetchCustomers } from "../Services/CustomerService";
+import { Link } from "react-router-dom";
 
 const CustomersList: React.FC = () => {
     const [customers, setCustomers] = useAtom(customerAtom);
@@ -33,7 +35,9 @@ const CustomersList: React.FC = () => {
                 <tbody>
                 {customers.map((customer) => (
                     <tr key={customer.id}>
-                        <td>{customer.name}</td>
+                        <td>
+                            <Link to={`/customer/${customer.id}`}>{customer.name}</Link>
+                        </td>
                         <td>{customer.address}</td>
                         <td>{customer.email}</td>
                         <td>{customer.phone}</td>

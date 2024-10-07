@@ -11,3 +11,7 @@ export const postCustomer = async (customer: any) => {
     const response = await axios.post(apiBaseUrl, customer);
     return response.data;
 }
+
+export const fetchCustomer = async (id: number) => {
+    const response = await axios.get(`${apiBaseUrl}/${id}`);
+    return response.data;}
