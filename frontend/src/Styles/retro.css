@@ -544,3 +544,24 @@ body {
     text-align: center;   /* Center the text */
     margin: 20px 0;      /* Add some margin above and below */
 }
+
+/* Form input fields in retro style */
+.retro-input {
+    border: 2px inset #aaa;
+    padding: 5px;
+    width: calc(100% - 20px);
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f8f8f8;
+}
+
+.product-list-container {
+    min-height: 400px; /* Ensures the container is at least 400px tall */
+    max-height: 600px; /* Optionally set a max height */
+    overflow-y: auto;  /* Adds scroll if the content overflows */
+    margin-top: 20px;
+    border: 1px solid #ddd; /* Optional: Adds a border to make the container visible */
+    padding: 10px;
+}
+
