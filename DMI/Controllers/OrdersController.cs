@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DMI.Data;
+using Microsoft.AspNetCore.Mvc;
 using DMI.DTOs;
 using DMI.Models;
 
@@ -9,6 +10,13 @@ namespace DMI.Controllers;
 public class OrdersController : ControllerBase
 {
     private static List<Order> _orders = new List<Order>();
+    
+    private readonly ApplicationDbContext _context;
+
+    public OrdersController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
 
     [HttpGet]
     public ActionResult<IEnumerable<OrderDto>> GetOrders()
@@ -29,23 +37,53 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<OrderDto> PlaceOrder(OrderDto orderDto)
+    public ActionResult<OrderDto> PlaceOrder(CreateOrderDto dto)
     {
+        // Map the DTO to the model based on information in the DTO
         var order = new Order
         {
-            Id = _orders.Count + 1,
-            OrderDate = orderDto.OrderDate,
-            OrderEntries = orderDto.OrderEntries.Select(oe => new OrderEntry
+            OrderDate =  DateTime.UtcNow,
+            DeliveryDate = DateTime.SpecifyKind(dto.DeliveryDate, DateTimeKind.Utc),
+            OrderEntries = dto.OrderEntries.Select(oe => new OrderEntry
+            {
+                ProductId = oe.ProductId, // TODO: Validate that the ProductId exists
+                Quantity = oe.Quantity // TODO: Validate that the Quantity is positive
+            }).ToList(),
+            CustomerId = dto.CustomerId
+        };
+        
+        var pendingStatusId = _context.OrderStatuses.FirstOrDefault(os => os.Status == "Pending");
+        order.Status = pendingStatusId;
+        
+        // Calculate the total amount based on the Product Ids and quantities in the OrderEntries
+        var productsInOrder = order.OrderEntries.Select(oe => _context.Products.FirstOrDefault(p => p.Id == oe.ProductId));
+        // Calculate the total amount based on the Product prices and quantities
+        order.TotalAmount = (int)productsInOrder.Select((p, i) => p.Price * order.OrderEntries[i].Quantity).Sum();
+        
+        _context.Orders.Add(order);
+        _context.OrderEntry.AddRange(order.OrderEntries); // Reference to the Order is set automatically (?)
+        _context.SaveChanges();
+        
+        return CreatedAtAction(nameof(GetOrders), new { id = order.Id }, new OrderDto
+        {
+            Id = order.Id,
+            OrderDate = order.OrderDate,
+            DeliveryDate = order.DeliveryDate,
+            TotalAmount = order.TotalAmount,
+            OrderEntries = order.OrderEntries.Select(oe => new OrderEntryDto
             {
                 Id = oe.Id,
                 ProductId = oe.ProductId,
+                OrderId = oe.OrderId,
                 Quantity = oe.Quantity
             }).ToList(),
-            Status = new OrderStatus { Id = 1, Status = "Pending" } // Default status
-        };
-
-        _orders.Add(order);
-        return CreatedAtAction(nameof(GetOrders), new { id = order.Id }, orderDto);
+            Status = new OrderStatusDto
+            {
+                Id = order.Status.Id,
+                Status = order.Status.Status
+            },
+            CustomerId = order.CustomerId
+        });
     }
 
     [HttpPut("{id}/status")]

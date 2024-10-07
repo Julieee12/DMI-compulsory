@@ -13,6 +13,7 @@ namespace DMI.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderEntry> OrderEntry { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<ProductProperties> ProductProperties { get; set; }

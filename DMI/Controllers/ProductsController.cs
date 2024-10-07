@@ -24,15 +24,14 @@ public class ProductsController : ControllerBase
     public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
     {
         var products = _context.Products
-            .Select(p => new ProductDto
+            .Select(p => new Product()
             {
-
+                Id = p.Id,
                 Name = p.Name,
                 Price = p.Price,
                 Stock = p.Stock,
                 IsDiscontinued = p.IsDiscontinued,
                 Properties = p.Properties
-
             });
 
         return Ok(products);

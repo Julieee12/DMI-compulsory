@@ -22,6 +22,7 @@ const CustomerDetailPage: React.FC = () => {
                 <p>Customer ID: {id}</p>
                 {/* Fetch and display customer details using the ID */}
             </div>
+            <a className={"retro-button"} href={`/customer/${id}/orders`}>Place/See Orders</a>
         </>
 )
     ;

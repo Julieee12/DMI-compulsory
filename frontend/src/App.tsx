@@ -4,6 +4,7 @@ import ProductPage from "./Pages/ProductPage";
 import CustomerPage from "./Pages/CustomerPage";
 import AdminPage from "./Pages/AdminPage";
 import CustomerDetailPage from "./Pages/CustomerDetailPage"; // Import the new page
+import OrdersPage from "./Pages/OrdersPage"; // Import the new page
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Route path="/customerpage" element={<CustomerPage />} />
                 <Route path="/adminpage" element={<AdminPage />} />
                 <Route path="/customer/:id" element={<CustomerDetailPage />} /> {/* Add this route */}
+                <Route path="/customer/:id/orders" element={<OrdersPage />} /> {/* Add this route */}
             </Routes>
         </Router>
     );
