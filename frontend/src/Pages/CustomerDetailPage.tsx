@@ -12,7 +12,6 @@ const CustomerDetailPage: React.FC = () => {
                 <h2>Dunder Mifflin Menu</h2>
                 <ul style={{listStyle: "disc", padding: "10px"}}>
                     <li><a href="/" style={{textDecoration: "none", color: "blue"}}>Home</a></li>
-                    <li><a href="/products" style={{textDecoration: "none", color: "blue"}}>Products</a></li>
                     <li><a href="/customerpage" style={{textDecoration: "none", color: "blue"}}>Customers</a></li>
 
                 </ul>
