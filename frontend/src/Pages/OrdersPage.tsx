@@ -3,6 +3,7 @@ import { productAtom } from "../Atoms/Atoms";
 import { useAtom } from "jotai";
 import { fetchProducts } from "../Services/ProductService";
 import { useParams } from "react-router-dom";
+import { postOrder } from "../Services/OrderService";
 
 const OrdersPage: React.FC = () => {
     const routeParams = useParams<{ id: string }>();
@@ -39,7 +40,10 @@ const OrdersPage: React.FC = () => {
             return 0;
         });
 
-    const placeOrder = () => {
+    const handleOrderSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        // Collect order items from quantities map
         const orderItems = Array.from(quantities.entries())
             .filter(([_, quantity]) => quantity > 0)
             .map(([productId, quantity]) => ({
@@ -47,18 +51,38 @@ const OrdersPage: React.FC = () => {
                 quantity,
             }));
 
+        // Validate that there are order items and a delivery date
+        if (orderItems.length === 0) {
+            console.error("No items to order.");
+            return;
+        }
+
+        if (!deliveryDate) {
+            console.error("Delivery date is required.");
+            return;
+        }
+
         if (!routeParams.id) {
             console.error("Customer ID is missing.");
             return;
         }
 
-        const dto = {
-            deliveryDate: deliveryDate,
+        // Prepare the order object
+        const newOrder = {
+            deliveryDate: deliveryDate.toISOString(), // Ensure it's in ISO format
             customerId: parseInt(routeParams.id),
             orderItems: orderItems,
         };
 
-        console.log(dto);
+        console.log("Creating order:", newOrder); // Log the order for debugging
+
+        try {
+            // Make the post request
+            await postOrder(newOrder);
+            console.log("Order placed successfully!");
+        } catch (error) {
+            console.error("Error placing order:", error); // Log any errors
+        }
     };
 
     return (
@@ -142,11 +166,13 @@ const OrdersPage: React.FC = () => {
                     </table>
                 </div>
 
-                <div className={"flex flex-row justify-between"}>
-                    Delivery Date:
-                    <input type={"date"} onChange={(e) => setDeliveryDate(new Date(e.target.value))} />
-                    <button onClick={placeOrder}>Place Order</button>
-                </div>
+                <form onSubmit={handleOrderSubmit}>
+                    <div className={"flex flex-row justify-between"}>
+                        Delivery Date:
+                        <input type={"date"} onChange={(e) => setDeliveryDate(new Date(e.target.value))} />
+                        <button type="submit">Place Order</button>
+                    </div>
+                </form>
             </div>
         </>
     );
