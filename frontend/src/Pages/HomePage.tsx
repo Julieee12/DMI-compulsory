@@ -46,13 +46,17 @@ const HomePage: React.FC = () => {
 
                 </div>
                 <div className={"adsstyling"}>
+                    <a href="https://www.blackberry.com/us/en/products/devices" target="_blank">
                     <img src={blackberryAd} alt="Blackberry Ad" className="ad-image"/>
                     <p className="ad-text">Display your ad here!</p>
+                    </a>
                 </div>
 
                 <div className="adsstyling">
+                    <a href="https://www.tripadvisor.com/Hotel_Review-g52842-d730099-Reviews-Schrute_Farms-Honesdale_Pocono_Mountains_Region_Pennsylvania.html" target="_blank">
                     <img src={schruteAd} alt="Schrute Ad" className="ad-image"/>
                     <p className="ad-text">Display your ad here!</p>
+                    </a>
                 </div>
             </div>
 
@@ -62,7 +66,9 @@ const HomePage: React.FC = () => {
                     <p> ADS!ADS!ADS!</p>
                 </div>
                 <div className={"adsstyling"}>
+                    <a href="https://theoffice.fandom.com/wiki/Vance_Refrigeration" target="_blank">
                     <img src={Vance} alt="Vance Ad" className="ad-image"/>
+                    </a>
                     <p className="ad-text">Display your ad here!</p>
                 </div>
 
