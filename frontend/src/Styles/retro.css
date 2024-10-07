@@ -12,43 +12,57 @@ body {
 /* Left Menu styles */
 .retro-left-menu {
     width: 220px;
-    background-color: #d3d3d3;
-    padding: 15px;
+    background-color: #d3d3d3; /* Light gray background */
+    padding: 20px; /* Increased padding for a spacious feel */
     border: 3px outset #ccc;
     margin-right: 20px;
-    height: 100vh;
+    height: 100vh; /* Full height of viewport */
     position: fixed;
     top: 0;
     left: 0;
     display: flex;
     flex-direction: column;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
 }
 
+/* Update the list styles */
 .retro-left-menu ul {
     list-style-type: none;
     padding-left: 0;
 }
 
+/* Add a hover effect for list items */
 .retro-left-menu li {
     margin-bottom: 15px;
     font-weight: bold;
+    transition: background-color 0.3s; /* Smooth transition for hover */
 }
 
+/* New hover effect */
+.retro-left-menu li:hover {
+    background-color: #ffa500; /* Bright orange background on hover */
+}
+
+/* Style for anchor tags */
 .retro-left-menu a {
-    color: blue;
+    color: #333; /* Dark text color */
     text-decoration: none;
     display: flex;
     align-items: center;
-    font-size: 16px;
+    font-size: 18px; /* Increased font size */
+    padding: 10px; /* Padding for touch targets */
 }
 
-.retro-left-menu a:hover {
-    text-decoration: underline;
-}
-
+/* Icons can be styled here */
 .retro-left-menu svg {
-    margin-right: 10px;
+    margin-right: 10px; /* Space between icon and text */
 }
+
+/* Add a bottom margin to the last item for spacing */
+.retro-left-menu li:last-child {
+    margin-bottom: 0;
+}
+
 
 /* Admin Main Content Styles */
 .admin-main-content {
@@ -373,4 +387,160 @@ body {
     padding: 10px 20px; /* Padding inside buttons */
     cursor: pointer; /* Pointer cursor on hover */
     font-size: 1rem; /* Button text size */
+}
+
+
+
+
+/* Styling for CustomerList container */
+.customers-list-container {
+    margin: 20px auto; /* Center the container and add some vertical margin */
+    padding: 10px;
+    border: 2px solid black;
+    background-color: #fff;
+    box-shadow: 3px 3px 0px #999;
+    width: 100%; /* Make sure it fills its parent container's width */
+    max-width: 600px; /* Set a maximum width to keep the table from being too large */
+    border-radius: 10px; /* Rounded corners for retro feel */
+    text-align: center; /* Center-align text within the container */
+}
+
+/* Retro Table Styling */
+.retro-table {
+    width: 100%; /* Make the table take the full width of its container */
+    border-collapse: collapse;
+    margin: 0 auto; /* Center the table within its container */
+    font-family: "Courier New", Courier, monospace;
+    box-shadow: 3px 3px 0px #666;
+}
+
+.retro-table th,
+.retro-table td {
+    border: 2px solid #000;
+    padding: 10px;
+    text-align: center; /* Center-align text in cells */
+    background-color: #f8f8f8;
+    font-size: 14px; /* Reduce font size for a more balanced look */
+}
+
+.retro-table th {
+    background-color: #ffa500;
+    color: #000;
+    font-weight: bold;
+    box-shadow: 2px 2px 0px #555;
+}
+
+.retro-table td {
+    background-color: #f2f2f2;
+    box-shadow: 2px 2px 0px #999;
+    color: #333;
+}
+
+/* Retro Link Styling for customer names */
+.retro-link {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.retro-link:hover {
+    text-decoration: underline;
+}
+
+/* Header in customers-list */
+.retro-header {
+    font-size: 20px; /* Reduce font size to match container */
+    color: red;
+    background-color: yellow;
+    padding: 8px;
+    border: 2px solid black;
+    text-align: center;
+    margin-bottom: 15px;
+    box-shadow: 3px 3px 0px #666;
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* Adjusting Table for Better View on Smaller Screens */
+@media (max-width: 768px) {
+    .adsstyling {
+        width: 90%; /* Adjust for smaller screens */
+        padding: 10px;
+    }
+
+    .customers-list-container {
+        width: 90%; /* Adjust container width for smaller screens */
+        padding: 10px;
+    }
+
+    .retro-table th,
+    .retro-table td {
+        padding: 6px;
+        font-size: 12px; /* Adjust font size for smaller screens */
+    }
+}
+
+/* Customer Page Specific Styles */
+
+/* Container for the Customer Page */
+.customer-page-container {
+    max-width: 900px; /* Increased width */
+    margin: 0 auto; /* Center align */
+    padding: 40px; /* Increased padding */
+    background-color: #f8f8f8; /* Background color for better readability */
+    border: 3px solid black; /* Thicker border */
+    box-shadow: 10px 10px 0px #999; /* Bigger shadow for emphasis */
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Heading Style for "Okay, but which one?" */
+.customer-page-header {
+    font-size: 36px; /* Increased font size */
+    color: #d9534f; /* A more retro color */
+    text-align: center;
+    margin-bottom: 30px; /* Increased margin for spacing */
+    padding: 10px;
+    border: 3px solid #000;
+    background-color: #ffff99; /* Light yellow for a retro touch */
+    box-shadow: 5px 5px 0px #666; /* Stronger shadow */
+}
+
+/* Retro Table Styling Specific for CustomerPage */
+.customer-page-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 20px; /* Increased font size */
+}
+
+.customer-page-table th,
+.customer-page-table td {
+    border: 2px solid black; /* Strong borders */
+    padding: 15px; /* Increased padding for more space */
+    text-align: center;
+}
+
+.customer-page-table th {
+    background-color: #ffcc00; /* Retro yellow background for headers */
+    color: #000;
+    font-weight: bold;
+}
+
+.customer-page-table td {
+    background-color: #fff;
+}
+
+/* Links within the Table */
+.retro-link {
+    color: blue;
+    font-weight: bold;
+    text-decoration: underline;
+}
+/* Specific styling for the header in CustomerPage */
+.customer-header {
+    color: red;           /* Set the text color to red */
+    font-weight: bold;    /* Make the text bold */
+    font-size: 32px;      /* Set the font size to be larger */
+    text-align: center;   /* Center the text */
+    margin: 20px 0;      /* Add some margin above and below */
 }

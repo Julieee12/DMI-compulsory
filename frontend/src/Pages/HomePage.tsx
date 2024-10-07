@@ -5,6 +5,7 @@ import schruteAd from '../assets/schrutead.png'; // Adjust the path as necessary
 import blackberryAd from '../assets/blackberryad.jpg'; // Adjust the path as necessary
 import BBB from '../assets/bbb.png'; // Adjust the path as necessary
 import Creed from '../assets/creed.png'; // Adjust the path as necessary
+import Vance from '../assets/vancead.png'; // Adjust the path as necessary
 import '../Styles/retro.css'; // Import the retro styles
 
 const HomePage: React.FC = () => {
@@ -61,7 +62,7 @@ const HomePage: React.FC = () => {
                     <p> ADS!ADS!ADS!</p>
                 </div>
                 <div className={"adsstyling"}>
-                    <img src={BBB} alt="BBB Ad" className="ad-image"/>
+                    <img src={Vance} alt="Vance Ad" className="ad-image"/>
                     <p className="ad-text">Display your ad here!</p>
                 </div>
 

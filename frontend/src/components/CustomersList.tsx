@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useAtom } from "jotai";
 import { customerAtom } from "../Atoms/Atoms";
-import {customerSelectedAtom} from "../Atoms/Atoms";
 import { fetchCustomers } from "../Services/CustomerService";
 import { Link } from "react-router-dom";
+import "../Styles/retro.css"; // Assuming new styles are here
 
 const CustomersList: React.FC = () => {
     const [customers, setCustomers] = useAtom(customerAtom);
@@ -22,8 +22,8 @@ const CustomersList: React.FC = () => {
 
     return (
         <div>
-            <h2>Customer List</h2>
-            <table>
+            <h2 className="retro-header"></h2>
+            <table className="customer-page-table">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -36,7 +36,9 @@ const CustomersList: React.FC = () => {
                 {customers.map((customer) => (
                     <tr key={customer.id}>
                         <td>
-                            <Link to={`/customer/${customer.id}`}>{customer.name}</Link>
+                            <Link to={`/customer/${customer.id}`} className="retro-link">
+                                {customer.name}
+                            </Link>
                         </td>
                         <td>{customer.address}</td>
                         <td>{customer.email}</td>

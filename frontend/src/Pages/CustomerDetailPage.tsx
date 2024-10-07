@@ -6,12 +6,25 @@ const CustomerDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
 
     return (
-        <div>
-            <h1>Customer Detail Page</h1>
-            <p>Customer ID: {id}</p>
-            {/* Fetch and display customer details using the ID */}
-        </div>
-    );
+
+        <>
+            <div className="retro-left-menu">
+                <h2>Dunder Mifflin Menu</h2>
+                <ul style={{listStyle: "disc", padding: "10px"}}>
+                    <li><a href="/" style={{textDecoration: "none", color: "blue"}}>Home</a></li>
+                    <li><a href="/products" style={{textDecoration: "none", color: "blue"}}>Products</a></li>
+                    <li><a href="/customerpage" style={{textDecoration: "none", color: "blue"}}>Customers</a></li>
+
+                </ul>
+            </div>
+            <div>
+                <h1>Customer Detail Page</h1>
+                <p>Customer ID: {id}</p>
+                {/* Fetch and display customer details using the ID */}
+            </div>
+        </>
+)
+    ;
 };
 
 export default CustomerDetailPage;
