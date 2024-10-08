@@ -71,7 +71,7 @@ const OrdersPage: React.FC = () => {
         const newOrder = {
             deliveryDate: deliveryDate.toISOString(), // Ensure it's in ISO format
             customerId: parseInt(routeParams.id),
-            orderItems: orderItems,
+            orderEntries: orderItems,
         };
 
         console.log("Creating order:", newOrder); // Log the order for debugging
