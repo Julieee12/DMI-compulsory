@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+  "jotai-devtools": "^0.10.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -22,6 +23,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "scaffold": "npx swagger-typescript-api -p http://localhost:5280/swagger/v1/swagger.json -o ./src/ -n Api.ts --axios",
+
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

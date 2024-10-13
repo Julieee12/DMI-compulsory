@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { productAtom } from "../Atoms/Atoms";
+import {orderAtom, productAtom} from "../Atoms/Atoms";
 import { useAtom } from "jotai";
 import { fetchProducts } from "../Services/ProductService";
 import { useParams } from "react-router-dom";
+<<<<<<< Updated upstream
+=======
+import { postOrder } from "../Services/OrderService";
+import {usethisone} from "../usethisone";
+import {CreateOrderDto} from "../Api";
+>>>>>>> Stashed changes
 
 const OrdersPage: React.FC = () => {
     const routeParams = useParams<{ id: string }>();
@@ -11,7 +17,7 @@ const OrdersPage: React.FC = () => {
     const [quantities, setQuantities] = useState<Map<number, number>>(new Map());
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [sortOption, setSortOption] = useState<string>("name");
-
+const [orders, setOrders] = useAtom(orderAtom);
     useEffect(() => {
         const loadProducts = async () => {
             try {
@@ -52,13 +58,35 @@ const OrdersPage: React.FC = () => {
             return;
         }
 
+<<<<<<< Updated upstream
         const dto = {
             deliveryDate: deliveryDate,
+=======
+        // Prepare the order object
+        const newOrder: CreateOrderDto = {
+
+            deliveryDate: deliveryDate.toISOString(), // Ensure it's in ISO format
+>>>>>>> Stashed changes
             customerId: parseInt(routeParams.id),
             orderItems: orderItems,
         };
 
+<<<<<<< Updated upstream
         console.log(dto);
+=======
+        console.log("Creating order:", newOrder); // Log the order for debugging
+
+        try {
+            // Make the post request
+const responsedata = await usethisone.api.ordersCreate(newOrder)
+            const resolved = responsedata.data;
+            const copyOfProducts = [...orders, resolved];
+            setOrders(copyOfProducts)
+            console.log("Order placed successfully!");
+        } catch (error) {
+            console.error("Error placing order:", error); // Log any errors
+        }
+>>>>>>> Stashed changes
     };
 
     return (
@@ -111,7 +139,10 @@ const OrdersPage: React.FC = () => {
                         <tbody>
                         {filteredAndSortedProducts.length > 0 ? (
                             filteredAndSortedProducts.map((product) => (
-                                <tr key={product.id}>
+                                <tr
+                                    // key={product["id"]}
+
+                                >
                                     <td>{product.name}</td>
                                     <td>{product.price}</td>
                                     <td>{product.stock}</td>
@@ -122,11 +153,11 @@ const OrdersPage: React.FC = () => {
                                             placeholder="Quantity"
                                             onChange={(e) => {
                                                 const quantity = parseInt(e.target.value) || 0;
-                                                if (quantity === 0) {
-                                                    quantities.delete(product.id!); // Remove entry if quantity is zero
-                                                } else {
-                                                    quantities.set(product.id!, quantity); // Set quantity
-                                                }
+                                                // if (quantity === 0) {
+                                                //     quantities.delete(product?["id"]); // Remove entry if quantity is zero
+                                                // } else {
+                                                //     quantities.set(product["id"]!, quantity); // Set quantity
+                                                // }
                                                 setQuantities(new Map(quantities)); // Update state
                                             }}
                                         />
@@ -142,11 +173,19 @@ const OrdersPage: React.FC = () => {
                     </table>
                 </div>
 
+<<<<<<< Updated upstream
                 <div className={"flex flex-row justify-between"}>
                     Delivery Date:
                     <input type={"date"} onChange={(e) => setDeliveryDate(new Date(e.target.value))} />
                     <button onClick={placeOrder}>Place Order</button>
                 </div>
+=======
+                    <div className={"flex flex-row justify-between"}>
+                        Delivery Date:
+                        <input type={"date"} onChange={(e) => setDeliveryDate(new Date(e.target.value))} />
+                        <button onClick={handleOrderSubmit} type="submit">Place Order</button>
+                    </div>
+>>>>>>> Stashed changes
             </div>
         </>
     );

@@ -34,8 +34,10 @@ const CustomersList: React.FC = () => {
                 </thead>
                 <tbody>
                 {customers.map((customer) => (
-                    <tr key={customer.id}>
+                    // @ts-ignore
+                    <tr key={customer["id"]}>
                         <td>
+                            {/*@ts-ignore*/}
                             <Link to={`/customer/${customer.id}`} className="retro-link">
                                 {customer.name}
                             </Link>
