@@ -1,11 +1,42 @@
-import React from "react";
-import { OrderDto } from "../Api"; // Assuming OrderDto is imported correctly
+import React, {useEffect, useState} from "react";
+import { OrderDto, OrderStatusDto } from "../Api"; // Assuming OrderDto and OrderStatusDto are imported correctly
+import {fetchOrders, updateOrderStatus} from "../Services/OrderService";
+import {orderAtom, orderStatusAtom} from "../Atoms/Atoms"; // Assuming this service is responsible for the update call
+import {useAtom} from "jotai";
+import {fetchOrderStatuses} from "../Services/OrderStatusService";
 
 interface OrdersListProps {
     orders: OrderDto[];
+
 }
 
-const OrdersList: React.FC<OrdersListProps> = ({ orders }) => {
+const EditableOrderList: React.FC<OrdersListProps> = ({ orders }) => {
+    const [orderStatuses, setOrderStatuses] = useAtom(orderStatusAtom);
+
+    useEffect(() => {
+        const loadOrderStatuses = async () => {
+            try {
+                const fetchedOrderStatuses = await fetchOrderStatuses();
+                setOrderStatuses(fetchedOrderStatuses);
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        };
+        loadOrderStatuses();
+    }, [setOrderStatuses]);
+
+
+
+    const handleStatusChange = async (orderId: number, newStatusId: number) => {
+        try {
+            // Send the new status to the backend to update the order
+            await updateOrderStatus(orderId, newStatusId);
+            console.log(`Order ${orderId} status updated to ${newStatusId}`);
+        } catch (error) {
+            console.error("Failed to update order status", error);
+        }
+    };
+
     return (
         <div>
             <h2 className="text-xl font-semi">Available Orders:</h2>
@@ -30,7 +61,20 @@ const OrdersList: React.FC<OrdersListProps> = ({ orders }) => {
                             <td className="border border-gray-300 p-2">{order.orderDate}</td>
                             <td className="border border-gray-300 p-2">{order.deliveryDate}</td>
                             <td className="border border-gray-300 p-2">{order.totalAmount}</td>
-                            <td className="border border-gray-300 p-2">{order.status?.status}</td>
+                            <td className="border border-gray-300 p-2">
+                                <select
+                                    className="border border-gray-300 p-1 rounded"
+                                    value={order.status?.id || ""}
+                                    onChange={(e) => handleStatusChange(order.id!, parseInt(e.target.value))}
+                                >
+                                    <option value="" disabled>Select Status</option>
+                                    {orderStatuses.map(status => (
+                                        <option key={status.id} value={status.id}>
+                                            {status.status}
+                                        </option>
+                                    ))}
+                                </select>
+                            </td>
                             <td className="border border-gray-300 p-2">
                                 <ul className="list-disc list-inside">
                                     {order.orderEntries?.map((entry, index) => (
@@ -49,4 +93,4 @@ const OrdersList: React.FC<OrdersListProps> = ({ orders }) => {
     );
 };
 
-export default OrdersList;
+export default EditableOrderList;

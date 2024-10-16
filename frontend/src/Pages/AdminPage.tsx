@@ -4,10 +4,11 @@ import { postProduct } from "../Services/ProductService";
 import CustomersList from "../components/CustomersList";
 import ProductsList from "../components/ProductsList";
 import "../Styles/retro.css";
-import OrdersList from "../components/OrdersList";
+
 import {orderAtom} from "../Atoms/Atoms";
 import {useAtom} from "jotai";
-import {fetchOrders} from "../Services/OrderService"; // This CSS file will contain some retro-specific styles.
+import {fetchOrders} from "../Services/OrderService";
+import EditableOrderList from "../components/EditableOrderList"; // This CSS file will contain some retro-specific styles.
 
 const AdminPage: React.FC = () => {
     // State variables for customer
@@ -203,7 +204,7 @@ const AdminPage: React.FC = () => {
 
                 <div style={{marginTop: "30px", padding: "10px", border: "2px dashed blue"}}>
                     <h3>Product List</h3>
-                    <OrdersList orders={orders}/>
+                    <EditableOrderList orders={orders}/>
                 </div>
             </div>
         </div>

@@ -23,6 +23,13 @@ public class OrdersController : ControllerBase
         {
             Id = o.Id,
             CustomerId = o.CustomerId,
+            TotalAmount = o.TotalAmount,
+            DeliveryDate = o.DeliveryDate,
+            Status = new OrderStatusDto
+            {
+                Id = o.Status.Id,
+                Status = o.Status.Status
+            },
             
             //TODO maybe add custumer name
             
@@ -89,7 +96,7 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPut("{id}/status")]
-    public ActionResult UpdateOrderStatus(int id, OrderStatusDto statusDto)
+    public ActionResult UpdateOrderStatus([FromRoute] int id, [FromBody] int statusId)
     {
         var order = _context.Orders.FirstOrDefault(o => o.Id == id);
         if (order == null)
@@ -97,8 +104,15 @@ public class OrdersController : ControllerBase
             return NotFound();
         }
 
-        order.Status = new OrderStatus { Id = statusDto.Id, Status = statusDto.Status };
-        return NoContent();
+        var status = _context.OrderStatuses.FirstOrDefault(os => os.Id == statusId);
+        if (status == null)
+        {
+            return NotFound();
+        }
+
+        order.Status = status;
+        _context.SaveChanges();
+        return Ok(order);
     }
 
     [HttpGet("customer/{customerId}")]
