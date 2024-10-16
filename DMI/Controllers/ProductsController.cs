@@ -59,6 +59,27 @@ public class ProductsController : ControllerBase
 
         return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, productDto);
     }
+    
+    [HttpPut("{id}")]
+    public IActionResult UpdateProduct(int id, [FromBody] ProductDto productDto)
+    {
+        var product = _context.Products.Find(id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        product.Name = productDto.Name;
+        product.Price = productDto.Price;
+        product.Stock = productDto.Stock;
+        product.IsDiscontinued = productDto.IsDiscontinued;
+        product.Properties = productDto.Properties;
+
+        _context.SaveChanges();
+
+        return NoContent();
+    }
+
 
     [HttpPut("{id}/discontinue")]
     public ActionResult DiscontinueProduct(int id)
