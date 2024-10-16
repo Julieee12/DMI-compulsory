@@ -43,7 +43,6 @@ const OrdersPage: React.FC = () => {
     const handleOrderSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        // Collect order items from quantities map
         const orderItems = Array.from(quantities.entries())
             .filter(([_, quantity]) => quantity > 0)
             .map(([productId, quantity]) => ({
@@ -51,7 +50,6 @@ const OrdersPage: React.FC = () => {
                 quantity,
             }));
 
-        // Validate that there are order items and a delivery date
         if (orderItems.length === 0) {
             console.error("No items to order.");
             return;
@@ -67,21 +65,19 @@ const OrdersPage: React.FC = () => {
             return;
         }
 
-        // Prepare the order object
         const newOrder = {
-            deliveryDate: deliveryDate.toISOString(), // Ensure it's in ISO format
+            deliveryDate: deliveryDate.toISOString(),
             customerId: parseInt(routeParams.id),
             orderEntries: orderItems,
         };
 
-        console.log("Creating order:", newOrder); // Log the order for debugging
+        console.log("Creating order:", newOrder);
 
         try {
-            // Make the post request
             await postOrder(newOrder);
             console.log("Order placed successfully!");
         } catch (error) {
-            console.error("Error placing order:", error); // Log any errors
+            console.error("Error placing order:", error);
         }
     };
 
@@ -102,10 +98,9 @@ const OrdersPage: React.FC = () => {
                     </li>
                 </ul>
             </div>
-            <div className={"min-w-[900px]"}>
-                <h1>Place Order</h1>
+            <div className="admin-main-content">
+                <h1 className="customer-header">Place Order</h1>
 
-                {/* Search and Sort Controls */}
                 <div>
                     <input
                         type="text"
@@ -121,9 +116,8 @@ const OrdersPage: React.FC = () => {
                     </select>
                 </div>
 
-                {/* Product List Container */}
-                <div className="product-list-container ">
-                    <table className={"w-full"}>
+                <div className="product-list-container">
+                    <table className="retro-table">
                         <thead>
                         <tr>
                             <th>Product Name</th>
@@ -147,11 +141,11 @@ const OrdersPage: React.FC = () => {
                                             onChange={(e) => {
                                                 const quantity = parseInt(e.target.value) || 0;
                                                 if (quantity === 0) {
-                                                    quantities.delete(product.id!); // Remove entry if quantity is zero
+                                                    quantities.delete(product.id!);
                                                 } else {
-                                                    quantities.set(product.id!, quantity); // Set quantity
+                                                    quantities.set(product.id!, quantity);
                                                 }
-                                                setQuantities(new Map(quantities)); // Update state
+                                                setQuantities(new Map(quantities));
                                             }}
                                         />
                                     </td>
@@ -167,9 +161,9 @@ const OrdersPage: React.FC = () => {
                 </div>
 
                 <form onSubmit={handleOrderSubmit}>
-                    <div className={"flex flex-row justify-between"}>
+                    <div className="flex flex-row justify-between">
                         Delivery Date:
-                        <input type={"date"} onChange={(e) => setDeliveryDate(new Date(e.target.value))} />
+                        <input type="date" onChange={(e) => setDeliveryDate(new Date(e.target.value))} />
                         <button type="submit">Place Order</button>
                     </div>
                 </form>

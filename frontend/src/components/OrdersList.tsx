@@ -8,7 +8,7 @@ interface OrdersListProps {
 const OrdersList: React.FC<OrdersListProps> = ({ orders }) => {
     return (
         <div>
-            <h2 className="text-xl font-semi">Available Orders:</h2>
+            <h2 className="text-xl font-semi">Order history:</h2>
             <div className="max-h-64 overflow-y-auto overflow-x-hidden border border-gray-300 rounded-md p-2 pr-6">
                 <table className="min-w-full table-auto border-collapse border border-gray-300">
                     <thead>
