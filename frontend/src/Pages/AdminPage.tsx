@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { postCustomer } from "../Services/CustomerService";
 import { postProduct } from "../Services/ProductService";
 import CustomersList from "../components/CustomersList";
 import ProductsList from "../components/ProductsList";
 import "../Styles/retro.css";
-import OrdersList from "../components/OrdersList"; // This CSS file will contain some retro-specific styles.
+import OrdersList from "../components/OrdersList";
+import {orderAtom} from "../Atoms/Atoms";
+import {useAtom} from "jotai";
+import {fetchOrders} from "../Services/OrderService"; // This CSS file will contain some retro-specific styles.
 
 const AdminPage: React.FC = () => {
     // State variables for customer
@@ -35,6 +38,20 @@ const AdminPage: React.FC = () => {
         console.log("Creating product:", newProduct);
         postProduct(newProduct);
     };
+// Orders list
+    const [orders, setOrders] = useAtom(orderAtom);
+
+    useEffect(() => {
+        const loadOrders = async () => {
+            try {
+                const fetchedOrders = await fetchOrders();
+                setOrders(fetchedOrders);
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        };
+        loadOrders();
+    }, [setOrders]);
 
     return (
         <div className="admin-container" style={{ display: "flex", margin: "8px" }}>
@@ -186,7 +203,7 @@ const AdminPage: React.FC = () => {
 
                 <div style={{marginTop: "30px", padding: "10px", border: "2px dashed blue"}}>
                     <h3>Product List</h3>
-                    <OrdersList/>
+                    <OrdersList orders={orders}/>
                 </div>
             </div>
         </div>

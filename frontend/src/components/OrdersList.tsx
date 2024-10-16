@@ -1,24 +1,12 @@
-// src/components/OrdersList.tsx
-import { orderAtom } from "../Atoms/Atoms";
-import React, { useEffect } from "react";
-import { fetchOrders } from "../Services/OrderService";
-import { useAtom } from "jotai";
+import React from "react";
+import {OrderDto} from "../Api";
 
-const OrdersList: React.FC = () => {
-    const [orders, setOrders] = useAtom(orderAtom);
+// Define props for OrdersList
+interface OrdersListProps {
+    orders: OrderDto[];
+}
 
-    useEffect(() => {
-        const loadOrders = async () => {
-            try {
-                const fetchedOrders = await fetchOrders();
-                setOrders(fetchedOrders);
-            } catch (error) {
-                console.error('Error fetching orders:', error);
-            }
-        };
-        loadOrders();
-    }, [setOrders]);
-
+const OrdersList: React.FC<OrdersListProps> = ({ orders }) => {
     return (
         <div>
             <h2 className="text-xl font-semi">Available Orders:</h2>
