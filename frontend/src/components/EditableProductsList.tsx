@@ -30,6 +30,16 @@ const EditableProductsList: React.FC = () => {
         }));
     };
 
+    const handleDiscontinuedChange = (productId: number, value: boolean) => {
+        setEditingProduct((prev) => ({
+            ...prev,
+            [productId]: {
+                ...prev[productId],
+                isDiscontinued: value,
+            },
+        }));
+    };
+
     const handleSave = async (productId: number) => {
         const updatedProduct = { ...products.find((p) => p.id === productId), ...editingProduct[productId] };
         try {
@@ -81,8 +91,8 @@ const EditableProductsList: React.FC = () => {
                             <td className="border border-gray-300 p-2">
                                 <input
                                     type="checkbox"
-                                    checked={product.isDiscontinued}
-                                    readOnly
+                                    checked={editingProduct[product.id!]?.isDiscontinued ?? product.isDiscontinued}
+                                    onChange={(e) => handleDiscontinuedChange(product.id!, e.target.checked)}
                                 />
                             </td>
                             <td className="border border-gray-300 p-2">{product.properties}</td>
