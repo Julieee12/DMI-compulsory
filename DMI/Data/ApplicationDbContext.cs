@@ -20,13 +20,7 @@ namespace DMI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Product-ProductProperty relationship
-            // modelBuilder.Entity<Product>()
-            //     .HasMany(p => p.Properties)
-            //     .WithOne(pp => pp.Product)
-            //     .HasForeignKey(pp => pp.ProductId);
-
-            // Order-OrderEntry relationship
+            
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderEntries)
                 .WithOne(oe => oe.Order)
