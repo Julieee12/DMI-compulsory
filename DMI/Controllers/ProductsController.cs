@@ -111,26 +111,5 @@ public class ProductsController : ControllerBase
         return NoContent();
     }
 
-    // [HttpPost("{id}/properties")]
-    // public ActionResult AddProductProperty(int id, [FromBody] ProductPropertiesDto propertiesDto)
-    // {
-    //     var product = _context.Products.Include(p => p.Properties).FirstOrDefault(p => p.Id == id);
-    //     if (product == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //
-    //     var property = new ProductProperties
-    //     {
-    //         Name = propertiesDto.Name,
-    //         ProductId = id
-    //     };
-    //
-    //     product.Properties.Add(property);
-    //     _context.SaveChanges();
-    //
-    //     return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, propertiesDto);
-    // }
-
-    // Additional CRUD operations for products
+   
 }
