@@ -1,3 +1,5 @@
+Student name: Ana Iulia Opris, CS- international class
+
 Welcome to Dunder Mifflin Infinity! You are about to see the most mediocre (at best) webshop ever created!
 
 !!!IMPORTANT!!
