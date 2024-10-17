@@ -8,3 +8,5 @@ From the home page simply navigate to "Michael Scott" to use administator like f
 When creating customers,orders or products there is no confirmation that they have been created, so just reload the page and they will show up (sorry).
 
 All advertisments on the website are interactive and the website looks bad on purpose!
+
+Everything runs locally!
