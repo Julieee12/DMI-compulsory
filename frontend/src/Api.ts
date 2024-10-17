@@ -61,7 +61,7 @@ export interface ProductDto {
   /** @format int32 */
   stock?: number;
   isDiscontinued?: boolean;
-  properties?: ProductPropertiesDto[] | null;
+  properties?: string | null;
 }
 
 export interface ProductPropertiesDto {

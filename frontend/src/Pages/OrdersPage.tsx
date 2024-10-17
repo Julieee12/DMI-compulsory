@@ -3,6 +3,7 @@ import { productAtom } from "../Atoms/Atoms";
 import { useAtom } from "jotai";
 import { fetchProducts } from "../Services/ProductService";
 import { useParams } from "react-router-dom";
+import { postOrder } from "../Services/OrderService";
 
 const OrdersPage: React.FC = () => {
     const routeParams = useParams<{ id: string }>();
@@ -39,7 +40,9 @@ const OrdersPage: React.FC = () => {
             return 0;
         });
 
-    const placeOrder = () => {
+    const handleOrderSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
         const orderItems = Array.from(quantities.entries())
             .filter(([_, quantity]) => quantity > 0)
             .map(([productId, quantity]) => ({
@@ -47,18 +50,35 @@ const OrdersPage: React.FC = () => {
                 quantity,
             }));
 
+        if (orderItems.length === 0) {
+            console.error("No items to order.");
+            return;
+        }
+
+        if (!deliveryDate) {
+            console.error("Delivery date is required.");
+            return;
+        }
+
         if (!routeParams.id) {
             console.error("Customer ID is missing.");
             return;
         }
 
-        const dto = {
-            deliveryDate: deliveryDate,
+        const newOrder = {
+            deliveryDate: deliveryDate.toISOString(),
             customerId: parseInt(routeParams.id),
-            orderItems: orderItems,
+            orderEntries: orderItems,
         };
 
-        console.log(dto);
+        console.log("Creating order:", newOrder);
+
+        try {
+            await postOrder(newOrder);
+            console.log("Order placed successfully!");
+        } catch (error) {
+            console.error("Error placing order:", error);
+        }
     };
 
     return (
@@ -78,10 +98,9 @@ const OrdersPage: React.FC = () => {
                     </li>
                 </ul>
             </div>
-            <div className={"min-w-[900px]"}>
-                <h1>Place Order</h1>
+            <div className="admin-main-content">
+                <h1 className="customer-header">Place Order</h1>
 
-                {/* Search and Sort Controls */}
                 <div>
                     <input
                         type="text"
@@ -97,9 +116,8 @@ const OrdersPage: React.FC = () => {
                     </select>
                 </div>
 
-                {/* Product List Container */}
-                <div className="product-list-container ">
-                    <table className={"w-full"}>
+                <div className="product-list-container">
+                    <table className="retro-table">
                         <thead>
                         <tr>
                             <th>Product Name</th>
@@ -123,11 +141,11 @@ const OrdersPage: React.FC = () => {
                                             onChange={(e) => {
                                                 const quantity = parseInt(e.target.value) || 0;
                                                 if (quantity === 0) {
-                                                    quantities.delete(product.id!); // Remove entry if quantity is zero
+                                                    quantities.delete(product.id!);
                                                 } else {
-                                                    quantities.set(product.id!, quantity); // Set quantity
+                                                    quantities.set(product.id!, quantity);
                                                 }
-                                                setQuantities(new Map(quantities)); // Update state
+                                                setQuantities(new Map(quantities));
                                             }}
                                         />
                                     </td>
@@ -142,11 +160,13 @@ const OrdersPage: React.FC = () => {
                     </table>
                 </div>
 
-                <div className={"flex flex-row justify-between"}>
-                    Delivery Date:
-                    <input type={"date"} onChange={(e) => setDeliveryDate(new Date(e.target.value))} />
-                    <button onClick={placeOrder}>Place Order</button>
-                </div>
+                <form onSubmit={handleOrderSubmit}>
+                    <div className="flex flex-row justify-between">
+                        Delivery Date:
+                        <input type="date" onChange={(e) => setDeliveryDate(new Date(e.target.value))} />
+                        <button type="submit">Place Order</button>
+                    </div>
+                </form>
             </div>
         </>
     );

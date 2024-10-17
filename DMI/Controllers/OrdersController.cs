@@ -9,8 +9,6 @@ namespace DMI.Controllers;
 [Route("api/[controller]")]
 public class OrdersController : ControllerBase
 {
-    private static List<Order> _orders = new List<Order>();
-    
     private readonly ApplicationDbContext _context;
 
     public OrdersController(ApplicationDbContext context)
@@ -21,9 +19,20 @@ public class OrdersController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<OrderDto>> GetOrders()
     {
-        var orderDtos = _orders.Select(o => new OrderDto
+        var orderDtos = _context.Orders.Select(o => new OrderDto
         {
             Id = o.Id,
+            CustomerId = o.CustomerId,
+            TotalAmount = o.TotalAmount,
+            DeliveryDate = o.DeliveryDate,
+            Status = new OrderStatusDto
+            {
+                Id = o.Status.Id,
+                Status = o.Status.Status
+            },
+            
+            //TODO maybe add custumer name
+            
             OrderDate = o.OrderDate,
             OrderEntries = o.OrderEntries.Select(oe => new OrderEntryDto
             {
@@ -87,17 +96,49 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPut("{id}/status")]
-    public ActionResult UpdateOrderStatus(int id, OrderStatusDto statusDto)
+    public ActionResult UpdateOrderStatus([FromRoute] int id, [FromBody] int statusId)
     {
-        var order = _orders.FirstOrDefault(o => o.Id == id);
+        var order = _context.Orders.FirstOrDefault(o => o.Id == id);
         if (order == null)
         {
             return NotFound();
         }
 
-        order.Status = new OrderStatus { Id = statusDto.Id, Status = statusDto.Status };
-        return NoContent();
+        var status = _context.OrderStatuses.FirstOrDefault(os => os.Id == statusId);
+        if (status == null)
+        {
+            return NotFound();
+        }
+
+        order.Status = status;
+        _context.SaveChanges();
+        return Ok(order);
     }
 
-    // Additional CRUD operations for orders
+    [HttpGet("customer/{customerId}")]
+    public ActionResult<IEnumerable<OrderDto>> GetOrdersForCustomer(int customerId)
+    {
+        var orderDtos = _context.Orders.Where(o => o.CustomerId == customerId).Select(o => new OrderDto
+        {
+            Id = o.Id,
+            OrderDate = o.OrderDate,
+            DeliveryDate = o.DeliveryDate,
+            TotalAmount = o.TotalAmount,
+            OrderEntries = o.OrderEntries.Select(oe => new OrderEntryDto
+            {
+                Id = oe.Id,
+                ProductId = oe.ProductId,
+                OrderId = oe.OrderId,
+                Quantity = oe.Quantity
+            }).ToList(),
+            Status = new OrderStatusDto
+            {
+                Id = o.Status.Id,
+                Status = o.Status.Status
+            },
+            CustomerId = o.CustomerId
+        }).ToList();
+
+        return Ok(orderDtos);
+    }
 }

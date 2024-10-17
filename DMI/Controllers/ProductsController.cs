@@ -59,6 +59,27 @@ public class ProductsController : ControllerBase
 
         return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, productDto);
     }
+    
+    [HttpPut("{id}")]
+    public IActionResult UpdateProduct(int id, [FromBody] ProductDto productDto)
+    {
+        var product = _context.Products.Find(id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        product.Name = productDto.Name;
+        product.Price = productDto.Price;
+        product.Stock = productDto.Stock;
+        product.IsDiscontinued = productDto.IsDiscontinued;
+        product.Properties = productDto.Properties;
+
+        _context.SaveChanges();
+
+        return NoContent();
+    }
+
 
     [HttpPut("{id}/discontinue")]
     public ActionResult DiscontinueProduct(int id)
@@ -90,26 +111,5 @@ public class ProductsController : ControllerBase
         return NoContent();
     }
 
-    // [HttpPost("{id}/properties")]
-    // public ActionResult AddProductProperty(int id, [FromBody] ProductPropertiesDto propertiesDto)
-    // {
-    //     var product = _context.Products.Include(p => p.Properties).FirstOrDefault(p => p.Id == id);
-    //     if (product == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //
-    //     var property = new ProductProperties
-    //     {
-    //         Name = propertiesDto.Name,
-    //         ProductId = id
-    //     };
-    //
-    //     product.Properties.Add(property);
-    //     _context.SaveChanges();
-    //
-    //     return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, propertiesDto);
-    // }
-
-    // Additional CRUD operations for products
+   
 }
