@@ -8,12 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-public class CustomerControllerTests
+public class CustomerCreationTests
 {
     private readonly CustomersController _controller;
     private readonly ApplicationDbContext _context;
 
-    public CustomerControllerTests()
+    public CustomerCreationTests()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
